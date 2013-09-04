@@ -1,0 +1,50 @@
+.tag-input-ctn {
+	padding: 0px !important;
+	overflow-y: auto;
+	height: 100%;
+}
+
+.tag-input-ctn input {
+	display: inline-block;
+	float: left;
+	height: 24px;
+	padding: 0px !important;
+	font-size: 11px !important;
+	line-height: 24px;
+	color: #424242;
+	border: 0px !important;
+	margin: 4px !important;
+	box-sizing: border-box !important;
+	-moz-box-sizing: border-box !important;
+}
+
+.tag-input-ctn input:focus {
+	outline: 0;
+	box-shadow: 0px;
+}
+
+.tag-input-ctn .input-tag {
+	padding: 0px 7px;
+	line-height: 24px;
+	font-size: 11px;
+	background-color: #5eb8e0;
+	display: inline-block;
+	float: left;
+	border-radius: 2px;
+	margin: 2px;
+	border: 1px solid #5eb8e0;
+	color: #084b68;
+}
+
+.tag-input-ctn .input-tag .delete-tag {
+	display: inline-block;
+	font-size: 12px;
+	cursor: pointer;
+	padding-left: 5px;
+	color: #a0e2ff;
+	font-weight: bold;
+}
+
+.tag-input-ctn .input-tag .delete-tag:hover {
+	/* background-color: #96b4d2; */
+}

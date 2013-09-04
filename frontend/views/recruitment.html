@@ -1,0 +1,71 @@
+      <div id="main">
+        <div class="content_left pull-left">
+          <h1 class="gold">Recruitment</h1>
+          <div class="purple-pull">
+            <h2>Why Delt?</h2>
+            <a href="./whydelt_curr.pdf">
+              Click here to learn about the many advantages
+              of becoming a Cornell Delt.
+            </a>
+            <span id="clogosm"></span>
+          </div>
+          <div id="submit-result"></div>
+          <h2 class="gold">
+            Sign up for more information about Delta Tau Delta.
+          </h2>
+           <form id="ss-form" style="position:relative;">
+        <div class="clearfix">
+          <label for="errorInput">First Name</label>
+          <div class="input">
+            <input class="xlarge" ng-model="first" name="entry.0.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix">
+          <label for="errorInput">Last Name</label>
+          <div class="input">
+            <input class="xlarge" ng-model="last" name="entry.1.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix">
+          <label id="optionsRadio">Year</label>
+          <div class="input" ng-repeat="year in years" ng-model="classyear">
+            <input value={year}>{{year}}</input>
+          </div>
+        </div>
+        <div class="clearfix">
+          <label for="errorInput">Net ID</label>
+          <div class="input">
+            <input class="xlarge" ng-model="netid" name="entry.3.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix">
+          <label for="errorInput">Phone Number</label>
+          <div class="input">
+            <input class="xlarge" ng-model="number" name="entry.4.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix">
+          <label for="errorInput">Dorm</label>
+          <div class="input">
+            <input class="xlarge" ng-model="dorm" name="entry.5.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix">
+          <label for="errorInput">Room Number</label>
+          <div class="input" ng-model="room">
+            <input class="xlarge" name="entry.6.single" class="ss-q-short" />
+          </div>
+        </div>
+        <div class="clearfix input">
+          <script type="text/javascript" src="js/recruitment.js"></script>
+          <script type="text/javascript" src={$captcha_uri}></script>
+        </div>
+        <div class="actions">
+          <input type="button" ng-click="submitForm()" id="submit" value="Submit" />
+        </div>
+      </form>
+        </div>
+        <div class="content_right pull-right">
+          {WebEventsController::renderRushEvents($this->mysqli)}
+        </div>
+      </div>

@@ -1,0 +1,151 @@
+angular.module('timelineApp', ['ui.date', 
+								'ui.state',
+								'timelineApp.filters',
+								'timelineApp.services',
+								'timelineApp.directives',
+								'timelineApp.controllers',
+								'timelineApp.constants',
+								'prevent-default'
+])
+.config(function($routeProvider, $stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/");
+		$stateProvider
+			.state('root', {url: '/', controller:'MainCtrl', templateUrl: 'views/main.html', data: {isFree: true}})
+			.state('login', {url: '/login', controller:'LoginCtrl', templateUrl: 'views/login.html', data: {isFree: true}})
+			.state('register', {url: '/register', controller:'RegisterCtrl', templateUrl: 'views/register.html', data: {isFree: true}})
+			.state('forgot', {url: '/forgot', controller: 'ForgotCtrl', templateUrl: 'views/forgotPass.html', data: {isFree: true}})
+			.state('myAccount', {url: '/myAccount', controller: 'MyAccountCtrl', templateUrl: 'views/myAccount.html', data: {isFree: true}})
+			.state('addProject', {url: '/addProject', controller:'AddProjectCtrl', templateUrl: 'views/addProject.html', data: {isFree: false}})
+			.state('addProject.addEvent', {url: '/addEvent', controller:'AddEventCtrl', templateUrl: 'views/addNewEvent.html', data: {isFree: false}})
+			.state('addProject.addLine', {url: '/addLine', controller: 'AddLineCtrl', templateUrl: 'views/addLine.html', data: {isFree: false}})
+			.state('addProject.viewMap', {url:'/viewMap', controller: 'MapCtrl', templateUrl: 'views/viewMap.html', data: {isFree: false}})
+			.state('root.flag', {url: 'flag', controller:'FlagCtrl', templateUrl: 'views/flag.html', data: {isFree: false}})
+			.state('root.books', {url: 'books', controller:'BooksCtrl', templateUrl: 'views/books.html', data: {isFree: false}})
+			.state('root.videos', {url: 'videos', controller:'VideosCtrl', templateUrl: 'views/videos.html', data: {isFree: false}})
+			.state('root.images', {url: 'images', controller:'ImagesCtrl', templateUrl: 'views/images.html', data: {isFree: false}})
+			.state('root.audio', {url: 'audio', controller:'AudioCtrl', templateUrl: 'views/audio.html', data: {isFree: false}})
+			.state('root.weather', {url: 'weather', controller:'WeatherCtrl', templateUrl: 'views/weather.html', data: {isFree: false}})
+			.state('root.maps', {url: 'maps', controller:'DisplayMapCtrl', templateUrl: 'views/map.html', data: {isFree: false}})
+			.state('root.calendars', {url: 'calendars', controller:'CalendarsCtrl', templateUrl: 'views/calendars.html', data: {isFree: false}})
+			.state('root.overview', {url: 'overview', controller:'OverviewCtrl', templateUrl: 'views/overview.html', data: {isFree: false}})
+}).run(['$rootScope', '$http', 'UserService', '$location', 'AuthService', '$state', function($rootScope, $http, UserService, $location, AuthService, $state) {
+	$rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+		if (!toState.data.isFree && !UserService.loggedIn) {
+			event.preventDefault();
+			
+			function successCallback(data)
+			{
+				$state.transitionTo(toState.name);
+			}
+			
+			function errorCallback(data)
+			{
+				UserService.path = toState.url;
+				$location.path('/login');
+				$location.replace();
+			}
+			
+			AuthService.checkLoggedIn(successCallback, errorCallback);
+		}
+		/*
+		 * IMPORTANT:
+		 * It's not difficult to fool the previous control,
+		 * so it's really IMPORTANT to repeat the control also in the backend,
+		 * before sending back from the server reserved information.
+		 */
+	});
+}]);
+
+angular.module('timelineApp.controllers', ['google-maps']);
+angular.module('timelineApp.filters', []);
+angular.module('timelineApp.services', []);
+angular.module('timelineApp.directives', []);
+angular.module('timelineApp.constants', []);
+
+$(document).ready(function(){
+	var $element = $('.application-loading');
+	$element.show();
+	$element.css({
+		'margin-left': -($element.width() / 2) + 'px',
+		'margin-top': -($element.height() / 2) + 'px'
+	});
+	
+	ScriptLoader.load([
+				'js/jqlite/offset.jqlite.js',
+				'js/vendor/jquery/jquery-ui.js',
+				'js/vendor/html5shiv/html5shiv-min.js',
+				'js/vendor/social-slider.js',
+				'js/vendor/timezones.js',
+				'js/vendor/cusel/cusel.js',
+				'js/vendor/http-auth-interceptor.js',
+				'js/vendor/angular-prevent-default.js',
+				'js/vendor/angular-ui-router/angular-ui-router.js',
+				'js/vendor/raphael/raphael-min.js',
+				'js/vendor/angular-google-maps.js',
+				'js/vendor/raphael/raphael.json.js',
+				'js/vendor/raphael/raphael.free_transform.js',
+				'js/vendor/raphael/raphael.z_index.js',
+				'js/vendor/raphael/raphael.connection.js',
+				'js/vendor/jquery/date.js',
+				'js/vendor/form.js',
+				'js/vendor/anytime.js',
+				'js/vendor/tags.js',
+				'js/vendor/date.js',
+				'js/vendor/hashCode.js',
+				'js/timeline_classes/timeline_editor.js',
+				'js/timeline_classes/timeline_ruler.js',
+				'js/timeline_classes/timeline_drawing_area.js',
+				'js/timeline_classes/timeline_event.js',
+				'js/timeline_classes/timeline_line.js',
+				'js/timeline_classes/timeline_calendar.js',
+				'js/services/constantsService.js',
+				'js/services/authService.js',
+				'js/services/userService.js',
+				'js/services/bufferService.js',
+				'js/services/lineService.js',
+				'js/services/eventService.js',
+				'js/services/resourceService.js',
+				'js/services/projectService.js',
+				'js/services/Util.js',
+				'js/controllers/main.js',
+				'js/controllers/flag.js',
+				'js/controllers/mapcontrol.js',
+				'js/controllers/login.js',
+				'js/controllers/register.js',
+				'js/controllers/myaccount.js',
+				'js/controllers/addproject.js',
+				'js/controllers/addevent.js',
+				'js/controllers/addline.js',
+				'js/controllers/forgot.js',
+				'js/controllers/maps.js',
+				'js/controllers/books.js',
+				'js/controllers/audio.js',
+				'js/controllers/images.js',
+				'js/controllers/videos.js',
+				'js/controllers/weather.js',
+				'js/controllers/overview.js',
+				'js/controllers/calendars.js',
+				'js/directives/datepicker.js',
+				'js/directives/timeinfo.js',
+				'js/directives/dropdown.js',
+				'js/directives/multi_dropdown.js',
+				'js/directives/popupWindow.js',
+				'js/directives/popupMessage.js',
+				'js/directives/ajaxLoader.js',
+				'js/directives/popupMap.js',
+				'js/directives/imageuploader.js',
+				'js/directives/audiouploader.js',
+				'js/directives/blurInputCheck.js',
+				'js/directives/usernameUnique.js',
+				'js/directives/timeline.js'
+		], function() {
+				$('.application-loading').hide();
+				angular.bootstrap(document, ['timelineApp']);
+		},
+		function(counter, count)
+		{
+			var percent = Math.round(counter * 100 / count);
+			$('.application-loading .percent-container').text(percent + '%');
+		}
+	);
+});

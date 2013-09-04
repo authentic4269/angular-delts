@@ -1,0 +1,22 @@
+      <div id="main">
+        <div class="content_full center">
+          <h1 class="gold">Current Brothers</h1>
+		<table id="brothers" />
+		<div class="cdiv" ng-repeat="{brother in brothers}">
+          <div class="pimg">
+            <a href={$link}><img
+					src={$img}
+					width="110px" /></a>
+          </div>
+          <br />
+          <span class="bname gold">
+            <a href={$link}>{$bro['name']}</a>
+          </span>
+          <br />
+          <span class="position">{$bro['pos'] . ' ' . $bro['year']}</span>
+          <br />
+          {$update_link}
+        </div>
+          </table>
+        </div>
+      </div>
